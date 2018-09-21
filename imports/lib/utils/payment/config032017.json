@@ -1,0 +1,8 @@
+{
+  "public": {
+    "stripe": {
+      "testPublishableKey": "your-testPublishableKey",
+      "livePublishableKey": "your-livePublishableKey"
+    }
+  }
+}

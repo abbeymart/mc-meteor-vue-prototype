@@ -1,0 +1,167 @@
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>mConnect Email</title>
+    <link href="styles/bootstrap.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="styles/w3.css" media="all" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div>
+    <div class="w3-container">
+        <!--Email-header | messages-->
+        <h3 style="color: dodgerblue">{{mcLabel.msgHello}} {{userProfile.firstName}} {{userProfile.lastName}},</h3>
+        <br>
+        <p style="font-size: 12px;">{{mcLabel.msgContentOrderRefund}}.</p>
+        <br>
+        <h4>{{mcLabel.orderId}}: {{orderNumber}}</h4>
+        <h4>{{mcLabel.orderDate}}: {{orderDate}}</h4>
+        <h4>{{mcLabel.refundDate}}: {{refundDate}}</h4>
+        <table style="width: 100%;font-size: 12px; border: 1px solid #eee;">
+            <tr>
+                <td style="width: 25%; text-align: left; margin-top: 10px; border-right: 1px solid #eee;">
+                    <h3>{{mcLabel.refunds}}</h3>
+                    <!--orderTotal, payTotal, current payment/method/date...-->
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.orderTotalTax}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{tradeParams.tradeCostTotalPlusTax}}</b></span>
+                    </p>
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.orderTotalPaid}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{amountPaid}}</b></span>
+                    </p>
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.refundAmount}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{refundAmount}}</b></span>
+                    </p>
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.refundPaid}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{refundPaid}}</b></span>
+                    </p>
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.toRefund}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{refRefund}}</b></span>
+                    </p>
+                    <p>
+                        <span style="width: 66%; text-align: left;"><b>{{mcLabel.orderPayBalance}}:</b></span>
+                        <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{amountDue}}</b></span>
+                    </p>
+                </td>
+                <td style="width: 25%; text-align: left; margin-top: 10px; border-right: 1px solid #eee;">
+                    <h3>{{mcLabel.refunds}}</h3>
+                </td>
+                <td style="width: 25%; text-align: left; margin-top: 10px; border-right: 1px solid #eee;">
+                    <h3>{{mcLabel.payAddress}}</h3>
+                    <p>{{tradeParams.tradePayAddress.contactName}}</p>
+                    <p>{{tradeParams.tradePayAddress.streetNumber}} {{tradeParams.tradePayAddress.streetName}}</p>
+                    <p>
+                        {{tradeParams.tradePayAddress.addressCity}}, {{statePayName}}
+                                                                   , {{tradeParams.tradePayAddress.postalCode}}</p>
+                    <p>{{countryPayName}}</p>
+                </td>
+                <td style="width: 25%; text-align: left; margin-top: 10px;">
+                    <h3>{{mcLabel.orderSummary}}</h3>
+                    <span style="width: 66%; text-align: left;"><b>{{mcLabel.subTotal}}
+                        [{{orderItems.length}} Item(s)]:</b></span>
+                    <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{tradeParams.tradeCost}}</b></span>
+                    <br>
+                    <span style="width: 66%; text-align: left;">{{mcLabel.shipEst}}:</span>
+                    <span style="width: 34%; text-align: right;">{{tradeCurrency}}{{tradeParams.tradeShipCost}}</span>
+                    <br>
+                    <span style="width: 66%; text-align: left;">{{mcLabel.shipTax}}:</span>
+                    <span style="width: 34%; text-align: right;">{{tradeCurrency}}{{tradeParams.tradeShipCostTax}}</span>
+                    <br>
+                    <span style="width: 66%; text-align: left;">{{mcLabel.itemTax}}:</span>
+                    <span style="width: 34%; text-align: right;">{{tradeCurrency}}{{tradeParams.tradeCostTax}}</span>
+                    <br>
+                    <span style="width: 66%; text-align: left;">{{mcLabel.orderBeforeTax}}:</span>
+                    <span style="width: 34%; text-align: right;">{{tradeCurrency}}{{tradeParams.tradeTotalCost}}</span>
+                    <br>
+                    <span style="width: 66%; text-align: left;">{{mcLabel.orderTax}} ({{tradeParams.tradeTaxName}}
+                                                                                     ):</span>
+                    <span style="width: 34%; text-align: right;">{{tradeCurrency}}{{tradeParams.tradeTotalCostTax}}</span>
+                    <br>
+                    <span style="width: 66%; text-align: left;"><b>{{mcLabel.orderTotalTax}}:</b></span>
+                    <span style="width: 34%; text-align: right;"><b>{{tradeCurrency}}{{tradeParams.tradeCostTotalPlusTax}}</b></span>
+                    <br>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div>
+        <h4>{{mcLabel.orderItem}}</h4>
+        <table style="width: 100%; font-size: 12px; border: 1px solid #eee;">
+            <thead style="color: teal;">
+            <tr>
+                <th style="width: 50%; text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{mcLabel.product}}</th>
+                <th style="width: 25%; text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{mcLabel.cost}}
+                    ({{tradeCurrency}})
+                </th>
+                <th style="width: 25%; text-align: left; padding: 10px; border-bottom: 1px solid #eee;">{{mcLabel.quantity}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each orderItems}}
+                <tr>
+                    <td style="width: 50%; text-align: left; margin: 10px; border-bottom: 1px solid #eee;">
+                        <b>{{productName}}</b>
+                        <br>
+                        {{shortProductDesc}}
+                    </td>
+                    <td style="width: 25%; text-align: right; margin: 10px; border-bottom: 1px solid #eee;">{{tradeCurrency}}{{productCost}}
+                    </td>
+                    <td style="width: 25%; text-align: right; margin: 10px; border-bottom: 1px solid #eee;">
+                        {{productQty}}
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <div>
+        <h4>{{mcLabel.refundItem}}</h4>
+        <table style="width: 100%; font-size: 12px; border: 1px solid #eee;">
+            <thead style="color: teal;">
+            <tr>
+                <th style="width: 50%; text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{mcLabel.product}}</th>
+                <th style="width: 25%; text-align: left; padding: 10px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;">{{mcLabel.cost}}
+                    ({{tradeCurrency}})
+                </th>
+                <th style="width: 25%; text-align: left; padding: 10px; border-bottom: 1px solid #eee;">{{mcLabel.quantity}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each refItems}}
+                <tr>
+                    <td style="width: 50%; text-align: left; margin: 10px; border-bottom: 1px solid #eee;">
+                        <b>{{productName}}</b>
+                        <br>
+                        {{shortProductDesc}}
+                    </td>
+                    <td style="width: 25%; text-align: right; margin: 10px; border-bottom: 1px solid #eee;">{{tradeCurrency}}{{productCost}}
+                    </td>
+                    <td style="width: 25%; text-align: right; margin: 10px; border-bottom: 1px solid #eee;">
+                        {{productQty}}
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <div>
+        <br>
+        <!--Email-footers | signature-->
+        <h3>{{mcLabel.msgFooterSignature}},</h3>
+        <p></p>
+        <h3>{{mcLabel.msgOrgName}}</h3>
+        <p style="font-size: 12px;">{{mcLabel.msgOrgAddress}}</p>
+        <p style="font-size: 12px;">{{mcLabel.msgOrgPhone}} | {{mcLabel.msgOrgWebsite}}</p>
+    </div>
+</div>
+</body>
+</html>

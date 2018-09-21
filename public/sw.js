@@ -1,0 +1,144 @@
+/**
+ * Created by abbeymart on 2017-10-08
+ * Service worker for PWA
+ * TODO: review / re-create base on needs | adapt to meteor/vuejs
+ */
+const HTMLToCache   = '/';
+const VERSION       = 'version-2';
+const STATIC_CACHE  = 'static_cache-v1';
+const DYNAMIC_CACHE = 'dynamic-cache-v1';
+
+self.addEventListener( 'install', ( event ) => {
+    console.log( '[Service Worker] Installing Service Worker ...', event );
+    event.waitUntil(
+        caches.open( VERSION )
+            .then( ( cache ) => {
+                console.log( '[Service Worker] Pre-caching App Shell' );
+                // cache.addAll([])
+                cache.addAll( [
+                    '/',
+                    '/index.html',
+                    '/js/promise.js',
+                    '/js/fetch.js',
+                    '/js/material.min.js',
+                ] )
+                    .then( self.skipWaiting() );
+            } )
+    );
+} );
+
+self.addEventListener( 'activate', ( event ) => {
+    console.log( '[Service Worker] Activating Service Worker ....', event );
+    event.waitUntil(
+        caches.keys()
+            .then( cacheNames => Promise.all( cacheNames.map( ( cacheName ) => {
+                if( cacheName !== VERSION && cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE ) {
+                    console.log( '[Service Worker] Removing old cache.', key );
+                    return caches.delete( cacheName );
+                }
+            } ) ) )
+            .then( self.clients.claim() )
+            .catch( err => console.log( 'Error activating service-worker: ' + err ) )
+    );
+} );
+
+self.addEventListener( 'fetch', ( event ) => {
+    /*const requestToFetch = event.request.clone();
+    event.respondWith(
+        caches.match( requestToFetch )
+            .then( ( cached ) => {
+                if( cached ) {
+                    return cached;
+                }
+                return fetch( event.request )
+                    .then( ( res ) => {
+                        const resClone = res.clone();
+                        return caches.open( DYNAMIC_CACHE )
+                            .then( ( cache ) => {
+                                // TODO: restrict/exclude pages to catch dynamically
+                                // cache.put( event.request.url, resClone );
+                                return res;
+                            } )
+                    } )
+            } )
+            .catch( ( err ) => {
+                console.log( 'Fetch-error occurred: ' + err );
+            } )
+    );*/
+
+    const requestToFetch = event.request.clone();
+    event.respondWith(
+        caches.match( event.request.clone() )
+            .then( ( cached ) => {
+                // We don't return cached HTML (except if fetch failed)
+                if( cached ) {
+                    const resourceType = cached.headers.get( 'content-type' );
+                    // We only return non css/js/html cached response e.g images
+                    if( !hasHash( event.request.url ) && !/text\/html/.test( resourceType ) ) {
+                        return cached;
+                    }
+
+                    // If the CSS/JS didn't change since it's been cached, return the cached version
+                    if( hasHash( event.request.url ) && hasSameHash( event.request.url, cached.url ) ) {
+                        return cached;
+                    }
+                }
+                return fetch( requestToFetch )
+                    .then( ( response ) => {
+                        const clonedResponse = response.clone();
+                        const contentType    = clonedResponse.headers.get( 'content-type' );
+
+                        if( !clonedResponse || clonedResponse.status !== 200 || clonedResponse.type !== 'basic'
+                            || /\/sockjs\//.test( event.request.url ) ) {
+                            return response;
+                        }
+
+                        if( /html/.test( contentType ) ) {
+                            caches.open( VERSION )
+                                .then( cache => cache.put( HTMLToCache, clonedResponse ) );
+                        } else {
+                            // Delete old version of a file
+                            if( hasHash( event.request.url ) ) {
+                                caches.open( VERSION )
+                                    .then( cache => cache.keys()
+                                        .then( keys => keys.forEach( ( asset ) => {
+                                            if( new RegExp( removeHash( event.request.url ) ).test( removeHash( asset.url ) ) ) {
+                                                cache.delete( asset );
+                                            }
+                                        } ) ) );
+                            }
+
+                            caches.open( VERSION )
+                                .then( cache => cache.put( event.request, clonedResponse ) );
+                        }
+                        return response;
+                    } ).catch( () => {
+                        if( hasHash( event.request.url ) ) return caches.match( event.request.url );
+                        // If the request URL hasn't been served from cache and isn't sockjs we suppose it's HTML
+                        else if( !/\/sockjs\//.test( event.request.url ) ) return caches.match( HTMLToCache );
+                        // Only for sockjs
+                        return new Response( 'No connection to the server', {
+                            status    : 503,
+                            statusText: 'No connection to the server',
+                            headers   : new Headers( { 'Content-Type': 'text/plain' } ),
+                        } );
+                    } );
+            } )
+    );
+
+
+} );
+
+function removeHash( element ) {
+    if( typeof element === 'string' ) return element.split( '?hash=' )[ 0 ];
+}
+
+function hasHash( element ) {
+    if( typeof element === 'string' ) return /\?hash=.*/.test( element );
+}
+
+function hasSameHash( firstUrl, secondUrl ) {
+    if( typeof firstUrl === 'string' && typeof secondUrl === 'string' ) {
+        return /\?hash=(.*)/.exec( firstUrl )[ 1 ] === /\?hash=(.*)/.exec( secondUrl )[ 1 ];
+    }
+}

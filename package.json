@@ -1,0 +1,46 @@
+{
+  "name": "mc-meteor-vue-prototype",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+    "visualize": "meteor --production --extra-packages bundle-visualizer"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.0.0-beta.55",
+    "axios": "^0.18.0",
+    "bcrypt": "^3.0.0",
+    "datatables.net": "^1.10.19",
+    "ddp.js": "^2.2.1",
+    "emailjs": "^2.2.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "meteor-node-stubs": "^0.4.1",
+    "moment": "^2.22.2",
+    "numeral": "^2.0.6",
+    "promise-polyfill": "^8.1.0",
+    "randomatic": "^3.1.0",
+    "rxjs": "^6.3.2",
+    "sanitize-html": "^1.19.0",
+    "stripe": "^6.11.0",
+    "summernote": "^0.8.10",
+    "vue": "^2.5.17",
+    "vue-html-editor": "^0.2.1",
+    "vue-meteor-tracker": "^2.0.0-beta.3",
+    "vue-router": "^2.8.1",
+    "vue-supply": "^0.3.0",
+    "vuex": "^1.0.0-rc.2"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/main.js"
+    },
+    "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}

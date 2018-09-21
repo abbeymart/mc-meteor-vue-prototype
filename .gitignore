@@ -1,0 +1,7 @@
+node_modules/
+.vscode
+.idea
+.meteor/local
+packages/
+public/upload
+imports/server/data

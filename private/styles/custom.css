@@ -1,0 +1,135 @@
+.headerBackground {
+    background: floralwhite;
+}
+
+.mcBottomBorder {
+    border-bottom-color: lightseagreen;
+}
+
+.mcList {
+    list-style-type: none;
+    display: inline;
+}
+
+.mcList li {
+    float: left;
+    padding-right: 20px;
+}
+
+.mcBoldLink {
+    font-weight: bold;
+}
+
+.mcDisplayBlock {
+    display: block;
+}
+
+.mcDisplayNone {
+    display: none;
+}
+
+.mcFullWidth {
+    width: 100%
+}
+
+.mainBody {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    width: 100% !important;
+}
+
+.mainList {
+    display: block;
+}
+
+#spinner {
+    height: 300px;
+}
+
+.errors {
+    position: fixed;
+    z-index: 10000;
+    padding: 10px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    pointer-events: none;
+}
+
+.alert {
+    animation: fadeOut 2700ms ease-in 0s 1 forwards;
+    -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards;
+    -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
+    width: 250px;
+    float: right;
+    clear: both;
+    margin-bottom: 5px;
+    pointer-events: auto;
+}
+
+/* User registration / login styles */
+/*body {*/
+/*padding-top: 40px;*/
+/*padding-bottom: 40px;*/
+/*background-color: #eee;*/
+/*}*/
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#mcSearch {
+    /*float: right;*/
+    padding: 0.5em;
+    min-width: 10em;
+    border-radius: 1em;
+    /*margin: 2em 1em;*/
+    border: none;
+    outline: none;
+}
+
+#btnSearch {
+    padding: 0.5em;
+    min-width: 5em;
+    border-radius: 1em;
+    outline: none;
+}
