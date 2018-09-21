@@ -18,30 +18,21 @@ This is the documentation for mConnect solutions prototype in meteor-vuejs-mongo
 
 ## Solutions - summary description
 
-  value-proposition, approach and expectations (design, delivery, sustainment...): mConnect is enterprise-level stakeholders-activity based solutions, with DRY approach to component based solution design. Essentially, all activities / tasks are based on stakeholders' / users' role assignment and seamless regardless of the underline functional needs (services, financial.... management). A user activity can incorporate different functions, which are streamlined/fitted/flow together to complete / deliver the goal of the user activity
+mConnect is enterprise-level stakeholders-activity based solutions,
+with DRY approach to component based solution design.
+Essentially, all activities / tasks are based on stakeholders' / users' role assignment 
+and seamless regardless of the underline functional needs (services, financial.... management).
+A user activity can incorporate different functions, which are streamlined/fitted/flow together
+to complete / deliver the goal of the user activity.
 
 mConnect was developed using nodejs, meteor-framework, vuejs, mongoDB...
 
 ``` bash
 # install dependencies
-npm install
 meteor npm install
 
-#### Build Setup
-
-``` bash
-
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:9080
-npm run dev
-
-# build electron application for production
-npm run build
-
-# run unit & end-to-end tests
-npm test
+# serve with hot reload at localhost:3000
+meteor or meteor run
 
 ```
 
